@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html data-ng-app="fit">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Assets -->
+	<script src="js/assets/jquery.min.js"></script>
+	<script src="js/assets/angular.min.js"></script>
+	<script src="js/assets/angular-resource.min.js"></script>
+	<script src="js/assets/angular-ui-router.min.js"></script>
+	<script src="js/assets/bootstrap.min.js"></script>
+
+	<!-- Application/config -->
+	<script src="js/application.js"></script>
+	<script src="js/services/cache.factory.js"></script>
+	<script src="js/services/fitdata.service.js"></script>
+	<script src="js/services/loader.service.js"></script>
+
+	<!-- Controllers -->
+	<script src="js/controllers/exercise.list.controller.js"></script>
+	<script src="js/controllers/exercise.create.controller.js"></script>
+	<script src="js/controllers/exercise.edit.controller.js"></script>
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/custom.css">
+
+	<title>{{currentStateTitle}}</title>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-body nav-container">
+					<a data-ng-class="{'active': currentState.indexOf('exercise') > -1}" data-ui-sref="exercise.list" class="btn btn-default">Exercises</a>
+					<a data-ng-class="{'active': currentState == 'plan.list'}" data-ui-sref="plan.list" class="btn btn-default">Plans</a>
+					<a data-ng-class="{'active': currentState == 'register'}" data-ui-sref="register" class="btn btn-default">Register</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-12" data-ui-view=""></div>
+	</div>
+</div>
+</body>
+</html>
