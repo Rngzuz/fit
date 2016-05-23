@@ -4,15 +4,15 @@ The difference between services and factories is that a service gets instantiate
 gets executed.
 */
 
-
 fit.service('DataService', ['$q', '$http', function ($q, $http) {
 	var endpoint = 'https://sleepy-sea-10905.herokuapp.com/api/exercises/';
 
 	//Get an entry using GET
 	this.get = function (id) {
+		id = id || false;
 		var defer = $q.defer();
 
-		$http.get(endpoint + encodeURIComponent(id))
+		$http.get(endpoint + (id ? id : ''))
 		.then(
 			function (data) {
 				defer.resolve(data);

@@ -1,4 +1,4 @@
-var fit = angular.module('fit', ['ui.router', 'ngResource']);
+var fit = angular.module('fit', ['ui.router']);
 
 fit.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 	//Fallback url

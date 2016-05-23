@@ -1,16 +1,21 @@
 fit
-.controller('ExerciseListController', function ($scope, DataService) {
+.controller('ExerciseListController', function ($scope, DataService, CacheFactory) {
 	$scope.data = [];
 
-	DataService.get('')
+	DataService.get()
 	.then(
 		function (response) {
+			CacheFactory.put('myData', response.data);
 			$scope.data = response.data;
 		},
 		function (error) {
 			console.log(error);
 		}
 	);
+
+	$scope.clearCache = function () {
+		CacheFactory.removeAll();
+	};
 
 	/*$http.get('https://sleepy-sea-10905.herokuapp.com/api/exercises/')
 	 .then(function(response) {

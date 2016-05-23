@@ -1,22 +1,35 @@
-fit.controller('ExerciseEditController', ['$scope', '$state', '$stateParams', 'DataService', function ($scope, $state, $stateParams, DataService) {
+fit.controller('ExerciseEditController', ['$scope', '$state', '$stateParams', 'DataService', 'CacheFactory', function ($scope, $state, $stateParams, DataService, CacheFactory) {
 	$scope.data = {};
 	$scope.isSaving = false;
 
 	if ($stateParams.id) {
 		$scope.isSaving = true;
 
-		DataService.get($stateParams.id)
-		.then(
-			function (response) {
-				$scope.data = response.data;
-				$scope.isSaving = false;
-			},
-			function (error) {
-				console.log(error);
-				$state.go('^.list');
-				$scope.isSaving = false;
+		if (CacheFactory.get('myData')) {
+			for (var i = 0; i < CacheFactory.get('myData').length; i++) {
+				var tmp = CacheFactory.get('myData')[i];
+
+				if (tmp['_id'] === $stateParams.id) {
+					$scope.data = tmp;
+					$scope.isSaving = false;
+					break;
+				}
 			}
-		);
+		} else {
+			DataService.get($stateParams.id)
+			.then(
+				function (response) {
+					$scope.data = response.data;
+					$scope.isSaving = false;
+					console.log(CacheFactory.get('myData'));
+				},
+				function (error) {
+					console.log(error);
+					$state.go('^.list');
+					$scope.isSaving = false;
+				}
+			);
+		}
 	} else {
 		$state.go('^.list');
 		console.log('No ID were specified.')
