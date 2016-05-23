@@ -1,4 +1,4 @@
-fit.controller('ExerciseCreateController', ['$scope', '$state', 'DataService', function ($scope, $state, DataService) {
+fit.controller('ExerciseCreateController', ['$scope', '$state', 'ExerciseDataService', function ($scope, $state, ExerciseDataService) {
 	$scope.data = {};
 	$scope.isSaving = false;
 
@@ -6,19 +6,16 @@ fit.controller('ExerciseCreateController', ['$scope', '$state', 'DataService', f
 		if (form.$valid) {
 			$scope.isSaving = true;
 
-			DataService.post($scope.data)
-			.then(
-				function () {
-					form.$setPristine();
-					$scope.data = {};
-					$scope.isSaving = false;
-					$state.go('^.list');
-				},
-				function (error) {
-					$scope.isSaving = false;
-					console.log(error);
-				}
-			);
+			ExerciseDataService.create($scope.data)
+			.then(function () {
+				$scope.isSaving = false;
+				form.$setPristine();
+				$scope.data = {};
+				$state.go('^.list');
+			}, function (error) {
+				$scope.isSaving = false;
+				console.log(error);
+			});
 		}
 	};
 }]);

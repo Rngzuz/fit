@@ -19,6 +19,7 @@
 	<script src="js/services/data.service.js"></script>
 	<script src="js/services/success.service.js"></script>
 	<script src="js/services/error.service.js"></script>
+	<script src="js/services/exercise.data.service.js"></script>
 
 	<!-- Controllers -->
 	<script src="js/controllers/exercise.list.controller.js"></script>
@@ -41,6 +42,22 @@
 					<a data-ng-class="{'active': currentState == 'plan.list'}" data-ui-sref="plan.list" class="btn btn-default">Plans</a>
 					<a data-ng-class="{'active': currentState == 'register'}" data-ui-sref="register" class="btn btn-default">Register</a>
 				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-12">
+			<div id="alert_success" class="alert alert-success alert-dismissible">
+				<button type="button" class="close" data-dismiss="alert">
+					<span>&times;</span>
+				</button>
+				<strong>Warning!</strong> Better check yourself, you're not looking too good.
+			</div>
+
+			<div id="alert_danger" class="alert alert-danger alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert">
+					<span>&times;</span>
+				</button>
+				<strong>Warning!</strong> Better check yourself, you're not looking too good.
 			</div>
 		</div>
 
