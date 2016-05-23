@@ -1,5 +1,5 @@
 fit
-.service('FitDataService', function ($q, $http, $cacheFactory) {
+.service('DataService', function ($q, $http, $cacheFactory) {
 	var endpoint = 'https://sleepy-sea-10905.herokuapp.com/api/exercises/';
 
 	return {
