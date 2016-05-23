@@ -1,70 +1,79 @@
+/*
+When a service is injected an instance will be created by angular, which can be in all controllers, services and so on.
+The difference between services and factories is that a service gets instantiated, where a factory is just a function that
+gets executed.
+*/
+
+
 fit.service('DataService', ['$q', '$http', function ($q, $http) {
 	var endpoint = 'https://sleepy-sea-10905.herokuapp.com/api/exercises/';
 
-	return {
-		//Get an entry using GET
-		get: function (id) {
-			var defer = $q.defer();
+	//Get an entry using GET
+	this.get = function (id) {
+		var defer = $q.defer();
 
-			$http.get(endpoint + encodeURIComponent(id))
-			.then(
-				function (data) {
-					defer.resolve(data);
-				},
-				function (error) {
-					defer.reject(error.status);
-				}
-			);
+		$http.get(endpoint + encodeURIComponent(id))
+		.then(
+			function (data) {
+				defer.resolve(data);
+			},
+			function (error) {
+				defer.reject(error.status);
+			}
+		);
 
-			return defer.promise;
-		},
-		//Create an entry using POST
-		post: function (object) {
-			var defer = $q.defer();
+		return defer.promise;
+	};
 
-			$http.post(endpoint, object)
-			.then(
-				function (data) {
-					defer.resolve(data);
-				},
-				function (error) {
-					defer.reject(error.status);
-				}
-			);
 
-			return defer.promise;
-		},
-		//Update an entry using PUT
-		put: function (id, object) {
-			var defer = $q.defer();
+	//Create an entry using POST
+	this.post = function (object) {
+		var defer = $q.defer();
 
-			$http.put(endpoint + encodeURIComponent(id), object)
-			.then(
-				function (data) {
-					defer.resolve(data);
-				},
-				function (error) {
-					defer.reject(error.status);
-				}
-			);
+		$http.post(endpoint, object)
+		.then(
+			function (data) {
+				defer.resolve(data);
+			},
+			function (error) {
+				defer.reject(error.status);
+			}
+		);
 
-			return defer.promise;
-		},
-		//Delete an entry using DELETE
-		delete: function (id) {
-			var defer = $q.defer();
+		return defer.promise;
+	};
 
-			$http.delete(endpoint + encodeURIComponent(id))
-			.then(
-				function (data) {
-					defer.resolve(data);
-				},
-				function (error) {
-					defer.reject(error.status);
-				}
-			);
+	//Update an entry using PUT
+	this.put = function (id, object) {
+		var defer = $q.defer();
 
-			return defer.promise;
-		}
+		$http.put(endpoint + encodeURIComponent(id), object)
+		.then(
+			function (data) {
+				defer.resolve(data);
+			},
+			function (error) {
+				defer.reject(error.status);
+			}
+		);
+
+		return defer.promise;
+	};
+
+	//Delete an entry using DELETE
+	this.delete = function (id) {
+		var defer = $q.defer();
+
+		$http.delete(endpoint + encodeURIComponent(id))
+		.then(
+			function (data) {
+				defer.resolve(data);
+			},
+			function (error) {
+				defer.reject(error.status);
+			}
+		);
+
+		return defer.promise;
 	};
 }]);

@@ -2,8 +2,7 @@ var fit = angular.module('fit', ['ui.router', 'ngResource']);
 
 fit.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 	//Fallback url
-	$urlRouterProvider
-	.otherwise('/dashboard');
+	$urlRouterProvider.otherwise('/dashboard');
 
 	$stateProvider
 	.state('dashboard', {
