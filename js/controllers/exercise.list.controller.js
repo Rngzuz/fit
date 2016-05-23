@@ -1,8 +1,8 @@
 fit
-.controller('ExerciseListController', function ($scope, FitDataService) {
+.controller('ExerciseListController', function ($scope, DataService) {
 	$scope.data = [];
 
-	FitDataService.get('')
+	DataService.get('')
 	.then(
 		function (response) {
 			$scope.data = response.data;

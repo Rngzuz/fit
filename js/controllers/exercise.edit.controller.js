@@ -1,12 +1,11 @@
-fit
-.controller('ExerciseEditController', function ($scope, $state, $stateParams, FitDataService) {
+fit.controller('ExerciseEditController', ['$scope', '$state', '$stateParams', 'DataService', function ($scope, $state, $stateParams, DataService) {
 	$scope.data = {};
 	$scope.isSaving = false;
 
 	if ($stateParams.id) {
 		$scope.isSaving = true;
 
-		FitDataService.get($stateParams.id)
+		DataService.get($stateParams.id)
 		.then(
 			function (response) {
 				$scope.data = response.data;
@@ -27,7 +26,7 @@ fit
 		if (form.$valid) {
 			$scope.isSaving = true;
 
-			FitDataService.put($stateParams.id, $scope.data)
+			DataService.put($stateParams.id, $scope.data)
 			.then(
 				function () {
 					$state.go('^.list');
@@ -47,7 +46,7 @@ fit
 		var confirmBox = window.confirm('Are you sure that you want to delete the exercise ' + $scope.data.name + '.');
 
 		if (confirmBox) {
-			FitDataService.delete($stateParams.id)
+			DataService.delete($stateParams.id)
 			.then(function () {
 				$state.go('^.list');
 			});
@@ -55,4 +54,4 @@ fit
 			$scope.isSaving = false;
 		}
 	};
-});
+}]);

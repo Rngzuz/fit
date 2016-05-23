@@ -1,5 +1,4 @@
-fit
-.service('DataService', function ($q, $http, $cacheFactory) {
+fit.service('DataService', ['$q', '$http', function ($q, $http) {
 	var endpoint = 'https://sleepy-sea-10905.herokuapp.com/api/exercises/';
 
 	return {
@@ -68,4 +67,4 @@ fit
 			return defer.promise;
 		}
 	};
-});
+}]);

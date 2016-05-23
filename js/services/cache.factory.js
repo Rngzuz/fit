@@ -1,4 +1,3 @@
-fit
-.factory('FitCache', function($cacheFactory) {
-	return $cacheFactory('Exercises');
-});
+fit.service('CacheService', ['$cacheFactory', function ($cacheFactory) {
+	return $cacheFactory('Fit');
+}]);

@@ -1,6 +1,6 @@
 var fit = angular.module('fit', ['ui.router', 'ngResource']);
 
-fit.config(function ($stateProvider, $urlRouterProvider) {
+fit.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 	//Fallback url
 	$urlRouterProvider
 	.otherwise('/dashboard');
@@ -60,9 +60,8 @@ fit.config(function ($stateProvider, $urlRouterProvider) {
 		url: '/:id',
 		templateUrl: 'partial/plan/plan.edit.html'
 	});
-
-})
-.run(function ($rootScope, $state) {
+}])
+.run(['$rootScope', '$state', function ($rootScope, $state) {
 	//Run blocks will be executed after config blocks and is the closest thing to a main method.
 
 	//Sets the page title and name of the current state
@@ -75,4 +74,4 @@ fit.config(function ($stateProvider, $urlRouterProvider) {
 		$rootScope.currentStateTitle = toState.title;
 		$rootScope.currentState = toState.name;
 	});
-});
+}]);

@@ -1,5 +1,4 @@
-fit
-.controller('ExerciseCreateController', function ($scope, $state, FitDataService) {
+fit.controller('ExerciseCreateController', ['$scope', '$state', 'DataService', function ($scope, $state, DataService) {
 	$scope.data = {};
 	$scope.isSaving = false;
 
@@ -7,7 +6,7 @@ fit
 		if (form.$valid) {
 			$scope.isSaving = true;
 
-			FitDataService.post($scope.data)
+			DataService.post($scope.data)
 			.then(
 				function () {
 					form.$setPristine();
@@ -22,4 +21,4 @@ fit
 			);
 		}
 	};
-});
+}]);
