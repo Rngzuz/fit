@@ -52,7 +52,7 @@ fit.controller('ExerciseEditController', ['$scope', '$rootScope', '$state', '$st
 	};
 
 	$scope.delete = function () {
-		var confirmBox = window.confirm('Are you sure?');
+		var confirmBox = setTimeout(window.confirm('Are you sure?'), 1);
 
 		if (confirmBox) {
 			$scope.isSaving = true;
