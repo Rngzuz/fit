@@ -1,23 +1,6 @@
 <div class="list-group">
 	<a data-ng-repeat="item in data" data-ui-sref="^.edit({id: item._id})" class="list-group-item">
-		<table>
-			<tr>
-				<td>
-					<b>_id: </b><br>
-					<b>name: </b><br>
-					<b>duration: </b><br>
-					<b>equipment: </b><br>
-					<b>burntQ: </b>
-				</td>
-				<td>
-					{{item._id}}<br>
-					{{item.name}}<br>
-					{{item.duration}}<br>
-					{{item.equipment}}<br>
-					{{item.burntQ}}
-				</td>
-			</tr>
-		</table>
+		{{item.name}}
 	</a>
 </div>
 <a data-ui-sref="^.create" class="btn btn-default btn-block">Add exercise</a>

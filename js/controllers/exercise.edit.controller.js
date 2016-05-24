@@ -1,39 +1,25 @@
-fit.controller('ExerciseEditController', ['$scope', '$rootScope', '$state', '$stateParams', 'ExerciseDataService', 'CacheFactory', function ($scope, $rootScope, $state, $stateParams, ExerciseDataService, CacheFactory) {
+fit.controller('ExerciseEditController', ['$scope', '$rootScope', '$state', '$stateParams', 'ExerciseDataService', function ($scope, $rootScope, $state, $stateParams, ExerciseDataService) {
 	$scope.data = {};
 	$scope.isSaving = false;
-	var cache = CacheFactory.cache.get('CacheData');
-	var currentCacheIndex = 0;
 
 	if ($stateParams.id) {
 		$scope.isSaving = true;
 
-		if (cache && !CacheFactory.getFlag()) {
-			for (var i = 0; i < cache.length; i++) {
-				if (cache[i]['_id'] === $stateParams.id) {
-					$scope.data = cache[i];
-					currentCacheIndex = i;
-					break;
-				}
-			}
-
+		ExerciseDataService.get($stateParams.id)
+		.then(function (response) {
 			$scope.isSaving = false;
-		} else {
-			ExerciseDataService.get($stateParams.id)
-			.then(function (response) {
-				$scope.isSaving = false;
-				$scope.data = response.data;
-			}, function (error) {
-				$scope.isSaving = false;
+			$scope.data = response.data;
+		}, function (error) {
+			$scope.isSaving = false;
 
-				$rootScope.alertError = {
-					visible: true,
-					status: error.status,
-					message: error.data.error
-				};
+			$rootScope.alertError = {
+				visible: true,
+				status: error.status,
+				message: error.data.error
+			};
 
-				$state.go('^.list');
-			});
-		}
+			$state.go('^.list');
+		});
 	} else {
 		$state.go('^.list');
 	}
@@ -70,17 +56,6 @@ fit.controller('ExerciseEditController', ['$scope', '$rootScope', '$state', '$st
 
 		if (confirmBox) {
 			$scope.isSaving = true;
-
-			if (cache && !CacheFactory.getFlag()) {
-				for (var i = 0; i < cache.length; i++) {
-					if (cache[i]['_id'] === $stateParams.id) {
-						cache.splice(i, 1);
-						break;
-					}
-				}
-				CacheFactory.cache.put('CacheData', cache);
-				$scope.isSaving = false;
-			}
 
 			ExerciseDataService.delete($stateParams.id)
 			.then(function (response) {

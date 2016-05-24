@@ -1,11 +1,10 @@
-fit.controller('ExerciseCreateController', ['$scope', '$state', 'ExerciseDataService', 'CacheFactory', function ($scope, $state, ExerciseDataService, CacheFactory) {
+fit.controller('ExerciseCreateController', ['$scope', '$state', 'ExerciseDataService', function ($scope, $state, ExerciseDataService) {
 	$scope.data = {};
 	$scope.isSaving = false;
 
 	$scope.submit = function (form) {
 		if (form.$valid) {
 			$scope.isSaving = true;
-			CacheFactory.setFlag(true);
 
 			ExerciseDataService.create($scope.data)
 			.then(function () {
