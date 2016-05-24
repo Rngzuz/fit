@@ -17,8 +17,6 @@
 	<!-- Services -->
 	<script src="js/services/cache.factory.js"></script>
 	<script src="js/services/data.service.js"></script>
-	<script src="js/services/success.service.js"></script>
-	<script src="js/services/error.service.js"></script>
 	<script src="js/services/exercise.data.service.js"></script>
 
 	<!-- Controllers -->
@@ -46,18 +44,18 @@
 		</div>
 
 		<div class="col-xs-12">
-			<div id="alert_success" class="alert alert-success alert-dismissible">
-				<button type="button" class="close" data-dismiss="alert">
+			<div data-ng-show="alertSuccess.visible" id="alert_success" class="alert alert-success alert-dismissible">
+				<button data-ng-click="alertSuccess.visible = false" type="button" class="close">
 					<span>&times;</span>
 				</button>
-				<strong>Warning!</strong> Better check yourself, you're not looking too good.
+				<strong>{{alertSuccess.status}}: </strong>{{alertSuccess.message}}
 			</div>
 
-			<div id="alert_danger" class="alert alert-danger alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert">
+			<div data-ng-show="alertError.visible" id="alert_danger" class="alert alert-danger alert-dismissible" role="alert">
+				<button data-ng-click="alertError.visible = false" type="button" class="close">
 					<span>&times;</span>
 				</button>
-				<strong>Warning!</strong> Better check yourself, you're not looking too good.
+				<strong>{{alertError.status}}: </strong>{{alertError.message}}
 			</div>
 		</div>
 

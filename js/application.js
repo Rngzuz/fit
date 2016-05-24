@@ -61,6 +61,18 @@ fit.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 	});
 }])
 .run(['$rootScope', '$state', function ($rootScope, $state) {
+	$rootScope.alertSuccess = {
+		visible: false,
+		status: '',
+		message: ''
+	};
+
+	$rootScope.alertError = {
+		visible: false,
+		status: '',
+		message: ''
+	};
+
 	//Run blocks will be executed after config blocks and is the closest thing to a main method.
 
 	//Sets the page title and name of the current state
@@ -70,6 +82,12 @@ fit.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 	//Updates the page title and name of the current state
 	//Params: event, toState, toParams, fromState, fromParams
 	$rootScope.$on('$stateChangeStart', function (event, toState) {
+		/*if ($rootScope.alertSuccess.status)
+			$rootScope.alertSuccess.status = false;
+
+		if ($rootScope.alertError.status)
+			$rootScope.alertError.status = false;*/
+
 		$rootScope.currentStateTitle = toState.title;
 		$rootScope.currentState = toState.name;
 	});

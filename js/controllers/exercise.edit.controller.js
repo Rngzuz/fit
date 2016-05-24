@@ -1,4 +1,4 @@
-fit.controller('ExerciseEditController', ['$scope', '$state', '$stateParams', 'ExerciseDataService', function ($scope, $state, $stateParams, ExerciseDataService) {
+fit.controller('ExerciseEditController', ['$scope', '$rootScope', '$state', '$stateParams', 'ExerciseDataService', function ($scope, $rootScope, $state, $stateParams, ExerciseDataService) {
 	$scope.data = {};
 	$scope.isSaving = false;
 
@@ -11,8 +11,14 @@ fit.controller('ExerciseEditController', ['$scope', '$state', '$stateParams', 'E
 			$scope.data = response.data;
 		}, function (error) {
 			$scope.isSaving = false;
+
+			$rootScope.alertError = {
+				visible: true,
+				status: error.status,
+				message: error.data.error
+			};
+
 			$state.go('^.list');
-			console.log(error);
 		});
 	} else {
 		$state.go('^.list');
@@ -23,12 +29,24 @@ fit.controller('ExerciseEditController', ['$scope', '$state', '$stateParams', 'E
 			$scope.isSaving = true;
 
 			ExerciseDataService.update($stateParams.id, $scope.data)
-			.then(function () {
+			.then(function (response) {
 				$scope.isSaving = false;
+
+				$rootScope.alertSuccess = {
+					visible: true,
+					status: response.status,
+					message: $scope.data.name + ' has been updated!'
+				};
+
 				$state.go('^.list');
 			}, function (error) {
 				$scope.isSaving = false;
-				console.log(error);
+
+				$rootScope.alertError = {
+					visible: true,
+					status: error.status,
+					message: error.data.error
+				};
 			});
 		}
 	};
@@ -40,12 +58,24 @@ fit.controller('ExerciseEditController', ['$scope', '$state', '$stateParams', 'E
 			$scope.isSaving = true;
 
 			ExerciseDataService.delete($stateParams.id)
-			.then(function () {
+			.then(function (response) {
 				$scope.isSaving = false;
+
+				$rootScope.alertSuccess = {
+					visible: true,
+					status: response.status,
+					message: $scope.data.name + ' has been deleted!'
+				};
+
 				$state.go('^.list');
 			}, function (error) {
 				$scope.isSaving = false;
-				console.log(error);
+
+				$rootScope.alertError = {
+					visible: true,
+					status: error.status,
+					message: error.data.error
+				};
 			});
 		}
 	};

@@ -25,7 +25,7 @@ fit.service('DataService', ['$q', '$http', function ($q, $http) {
 			},
 			function (error) {
 				//Error scenario
-				defer.reject(error.status);
+				defer.reject(error);
 			}
 		);
 
@@ -47,7 +47,7 @@ fit.service('DataService', ['$q', '$http', function ($q, $http) {
 				defer.resolve(response);
 			},
 			function (error) {
-				defer.reject(error.status);
+				defer.reject(error);
 			}
 		);
 
@@ -68,7 +68,7 @@ fit.service('DataService', ['$q', '$http', function ($q, $http) {
 				defer.resolve(response);
 			},
 			function (error) {
-				defer.reject(error.status);
+				defer.reject(error);
 			}
 		);
 
@@ -89,7 +89,7 @@ fit.service('DataService', ['$q', '$http', function ($q, $http) {
 				defer.resolve(response);
 			},
 			function (error) {
-				defer.reject(error.status);
+				defer.reject(error);
 			}
 		);
 
