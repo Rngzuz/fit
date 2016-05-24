@@ -1,3 +1,13 @@
 fit.factory('CacheFactory', ['$cacheFactory', function ($cacheFactory) {
-	return $cacheFactory('myData');
+	var flag = false;
+
+	return {
+		cache: $cacheFactory('CacheData'),
+		setFlag: function (val) {
+			flag = val;
+		},
+		getFlag: function () {
+			return flag;
+		}
+	}
 }]);
