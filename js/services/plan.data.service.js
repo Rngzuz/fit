@@ -1,10 +1,35 @@
-fit.service('ExerciseDataService', ['DataService', '$cacheFactory', '$q', function (DataService, $cacheFactory, $q) {
-	var endpoint = 'https://sleepy-sea-10905.herokuapp.com/api/exercises/';
-	var cacheName = 'ExerciseData';
+fit.service('PlanDataService', ['DataService', '$cacheFactory', '$q', function (DataService, $cacheFactory, $q) {
+	var endpoint = '';
+	var cacheName = 'PlanData';
 	var cache = $cacheFactory(cacheName);
 	var self = this;
 
-	this.flag = false;
+	this.flag = true;
+
+	var dummy = [
+		{
+			_id: 0,
+			name: 'Plan 1',
+			exercises: []
+		},
+		{
+			_id: 1,
+			name: 'Plan 2',
+			exercises: []
+		},
+		{
+			_id: 2,
+			name: 'Plan 3',
+			exercises: []
+		},
+		{
+			_id: 3,
+			name: 'Plan 4',
+			exercises: []
+		}
+	];
+
+	cache.put('Plan', dummy);
 
 	this.get = function (id) {
 		var defer = $q.defer();
@@ -23,12 +48,6 @@ fit.service('ExerciseDataService', ['DataService', '$cacheFactory', '$q', functi
 			return defer.promise;
 		}
 
-		DataService.get(endpoint, id)
-		.then(function (response) {
-			defer.resolve(response);
-			cache.put(cacheName, response.data);
-		});
-
 		return defer.promise;
 	};
 
@@ -43,13 +62,6 @@ fit.service('ExerciseDataService', ['DataService', '$cacheFactory', '$q', functi
 
 			return defer.promise;
 		}
-
-		DataService.get(endpoint)
-		.then(function (response) {
-			defer.resolve(response);
-			cache.put(cacheName, response.data);
-			self.flag = true;
-		});
 
 		return defer.promise;
 	};
@@ -71,27 +83,16 @@ fit.service('ExerciseDataService', ['DataService', '$cacheFactory', '$q', functi
 
 			cache.put(cacheName, cacheData);
 		}
-
-		return DataService.put(endpoint, id, object);
 	};
 
 	this.create = function (object) {
-		var defer = $q.defer();
 		var cacheData = cache.get(cacheName);
 
-		DataService.post(endpoint, object)
-		.then(function (response) {
-			object['_id'] = response['data']['_id'];
-
-			if (cacheData && self.flag) {
-				cacheData.push(object);
-				cache.put(cacheName, cacheData);
-			}
-
-			defer.resolve(response);
-		});
-
-		return defer.promise;
+		if (cacheData) {
+			cacheData.push(object);
+			cache.put(cacheName, cacheData);
+			self.flag = false;
+		}
 	};
 
 	this.delete = function (id) {
@@ -107,7 +108,5 @@ fit.service('ExerciseDataService', ['DataService', '$cacheFactory', '$q', functi
 
 			cache.put(cacheName, cacheData);
 		}
-
-		return DataService.delete(endpoint, id);
 	};
 }]);

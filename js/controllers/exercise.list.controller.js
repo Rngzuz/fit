@@ -6,7 +6,6 @@ fit
 	.then(
 		function (response) {
 			$scope.data = response.data;
-			console.log(ExerciseDataService.getCache());
 		},
 		function (error) {
 			console.log(error);
