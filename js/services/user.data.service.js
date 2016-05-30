@@ -2,7 +2,7 @@ fit.service('UserDataService', ['DataService', '$cacheFactory', '$q', function (
 	var endpoint = 'https://sleepy-sea-10905.herokuapp.com/api/users/';
 	var cacheName = 'UserData';
 	var cache = $cacheFactory(cacheName);
-	var isValid = false;
+	var isValid = true;
 
 	this.hack = function () {
 		isValid = true;

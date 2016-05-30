@@ -7,28 +7,74 @@
 					<fieldset data-ng-disabled="isSaving">
 						<div class="form-group">
 							<label for="name" class="control-label">Username</label>
-							<input data-ng-model="user.name" id="name" name="name" type="text" class="form-control" required>
+							<input data-ng-model="user.name" id="name" name="name" type="text" class="form-control"
+								   required>
 						</div>
 
 						<div class="form-group">
 							<label for="password" class="control-label">Password</label>
-							<input data-ng-model="user.password" id="password" name="password" type="password" class="form-control" required>
+							<input data-ng-model="user.password" id="password" name="password" type="password"
+								   class="form-control" required>
 						</div>
 					</fieldset>
 				</form>
 			</div>
+
 			<div class="col-xs-12 col-md-6">
-				<form name="registerForm" data-ng-submit="register(registerForm)">
+				<form name="registerForm" data-ng-submit="registerUser(registerForm)">
 					<fieldset data-ng-disabled="isSaving">
 						<div class="form-group">
-							<label for="registerName" class="control-label">Username</label>
-							<input data-ng-model="register.name" id="registerName" name="registerName" type="text" class="form-control" required>
+							<label for="registerEmail" class="control-label">E-mail</label>
+							<input data-ng-model="register.email" id="registerEmail" name="registerEmail" type="email"
+								   class="form-control" required>
 						</div>
 
 						<div class="form-group">
 							<label for="registerPassword" class="control-label">Password</label>
-							<input data-ng-model="register.password" id="registerPassword" name="registerPassword" type="password" class="form-control" required>
+							<input data-ng-model="register.password.first" id="registerPassword" name="registerPassword"
+								   type="password" class="form-control" required>
 						</div>
+
+						<div class="form-group">
+							<label for="confirmPassword" class="control-label">Confirm password</label>
+							<input data-ng-model="register.password.second" id="confirmPassword" name="confirmPassword"
+								   type="password" class="form-control" required>
+						</div>
+
+						<div class="form-group">
+							<label for="registerName" class="control-label">First name</label>
+							<input data-ng-model="register.name" id="registerName" name="registerName" type="text"
+								   class="form-control" required>
+						</div>
+
+						<div class="form-group">
+							<label for="registerLastName" class="control-label">Last name</label>
+							<input data-ng-model="register.lastname" id="registerLastName" name="registerLastName"
+								   type="text" class="form-control" required>
+						</div>
+
+						<div class="form-group">
+							<label for="registerMetric" class="control-label">Metric</label>
+							<select data-ng-model="register.metric" id="registerMetric" name="registerMetric"
+									class="form-control">
+								<option selected="selected">Kilograms</option>
+								<option>Pounds</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="registerWeight" class="control-label">Weight</label>
+							<input data-ng-model="register.weight" id="registerWeight" name="registerWeight"
+								   type="number" class="form-control">
+						</div>
+
+						<div class="form-group">
+							<label for="registerHeight" class="control-label">Height</label>
+							<input data-ng-model="register.height" id="registerHeight" name="registerHeight"
+								   type="number" class="form-control" data-ng-maxlength="3">
+						</div>
+
+						<button type="submit" class="btn btn-default btn-block">Register new user</button>
 					</fieldset>
 				</form>
 			</div>
