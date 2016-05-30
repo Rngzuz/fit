@@ -1,0 +1,37 @@
+<div class="panel panel-default">
+	<div class="panel-body">
+		<button data-ng-click="cheat()" type="button" class="btn btn-success">Quick test sign in</button>
+		<div class="row">
+			<div class="col-xs-12 col-md-6">
+				<form name="signInForm" data-ng-submit="validate(signInForm)">
+					<fieldset data-ng-disabled="isSaving">
+						<div class="form-group">
+							<label for="name" class="control-label">Username</label>
+							<input data-ng-model="user.name" id="name" name="name" type="text" class="form-control" required>
+						</div>
+
+						<div class="form-group">
+							<label for="password" class="control-label">Password</label>
+							<input data-ng-model="user.password" id="password" name="password" type="password" class="form-control" required>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+			<div class="col-xs-12 col-md-6">
+				<form name="registerForm" data-ng-submit="register(registerForm)">
+					<fieldset data-ng-disabled="isSaving">
+						<div class="form-group">
+							<label for="registerName" class="control-label">Username</label>
+							<input data-ng-model="register.name" id="registerName" name="registerName" type="text" class="form-control" required>
+						</div>
+
+						<div class="form-group">
+							<label for="registerPassword" class="control-label">Password</label>
+							<input data-ng-model="register.password" id="registerPassword" name="registerPassword" type="password" class="form-control" required>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,19 +1,17 @@
 var fit = angular.module('fit', ['ui.router']);
 
+//Application configurations
 fit.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 	//Fallback url
-	$urlRouterProvider.otherwise('/dashboard');
+	$urlRouterProvider.otherwise('/auth');
 
+	//Abstract states are not accessible and requires at least 1 child state
 	$stateProvider
-	.state('dashboard', {
-		url: '/dashboard',
-		templateUrl: 'partial/dashboard.html',
-		title: 'Dashboard'
-	})
-	.state('register', {
-		url: '/register',
-		templateUrl: 'partial/register.html',
-		title: 'Register'
+	.state('auth', {
+		url: '/auth',
+		templateUrl: 'partial/auth.html',
+		controller: 'AuthController',
+		title: 'Authentication'
 	});
 
 	$stateProvider
@@ -60,7 +58,8 @@ fit.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 		templateUrl: 'partial/plan/plan.edit.html'
 	});
 }])
-.run(['$rootScope', '$state', function ($rootScope, $state) {
+//Run blocks will be executed once after config blocks and is the closest thing to a main method.
+.run(['$rootScope', '$state', 'UserDataService', function ($rootScope, $state, UserDataService) {
 	$rootScope.alertSuccess = {
 		visible: false,
 		status: '',
@@ -73,8 +72,6 @@ fit.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 		message: ''
 	};
 
-	//Run blocks will be executed after config blocks and is the closest thing to a main method.
-
 	//Sets the page title and name of the current state
 	$rootScope.currentStateTitle = $state.title;
 	$rootScope.currentState = $state.name;
@@ -82,13 +79,20 @@ fit.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 	//Updates the page title and name of the current state
 	//Params: event, toState, toParams, fromState, fromParams
 	$rootScope.$on('$stateChangeStart', function (event, toState) {
-		/*if ($rootScope.alertSuccess.status)
-			$rootScope.alertSuccess.status = false;
+		var isValid = UserDataService.isAuthenticated();
 
-		if ($rootScope.alertError.status)
-			$rootScope.alertError.status = false;*/
+		if (!isValid) {
+			if (toState.name.indexOf('auth') == -1) {
+				event.preventDefault();
+				$state.go('auth');
+			}
+			$rootScope.currentStateTitle = 'Authentication';
+			$rootScope.currentState = 'auth';
+		} else if (isValid) {
+			$rootScope.currentStateTitle = toState.title;
+			$rootScope.currentState = toState.name;
+		}
 
-		$rootScope.currentStateTitle = toState.title;
-		$rootScope.currentState = toState.name;
+
 	});
 }]);

@@ -16,10 +16,13 @@
 
 	<!-- Services -->
 	<script src="js/services/data.service.js"></script>
+	<script src="js/services/user.data.service.js"></script>
 	<script src="js/services/exercise.data.service.js"></script>
 	<script src="js/services/plan.data.service.js"></script>
 
 	<!-- Controllers -->
+	<script src="js/controllers/auth.controller.js"></script>
+	<script src="js/controllers/nav.controller.js"></script>
 	<script src="js/controllers/exercise.list.controller.js"></script>
 	<script src="js/controllers/exercise.create.controller.js"></script>
 	<script src="js/controllers/exercise.edit.controller.js"></script>
@@ -33,12 +36,17 @@
 <body>
 <div class="container">
 	<div class="row">
-		<div class="col-xs-12">
+		<div data-ng-controller="NavController" class="col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-body nav-container">
-					<a data-ng-class="{'active': currentState.indexOf('exercise') > -1}" data-ui-sref="exercise.list" class="btn btn-default">Exercises</a>
-					<a data-ng-class="{'active': currentState == 'plan.list'}" data-ui-sref="plan.list" class="btn btn-default">Plans</a>
-					<a data-ng-class="{'active': currentState == 'register'}" data-ui-sref="register" class="btn btn-default">Register</a>
+					<span data-ng-show="isValid()">
+						<a data-ng-class="{'active': currentState.indexOf('exercise') > -1}" data-ui-sref="exercise.list" class="btn btn-default">Exercises</a>
+						<a data-ng-class="{'active': currentState == 'plan.list'}" data-ui-sref="plan.list" class="btn btn-default">Plans</a>
+					</span>
+					<span class="pull-right">
+					<a data-ng-hide="isValid()" data-ui-sref="auth" class="btn btn-default active">Sign In</a>
+					<a data-ng-show="isValid()" data-ng-click="signOut()" class="btn btn-default pull-right">Sign Out</a>
+					</span>
 				</div>
 			</div>
 		</div>
