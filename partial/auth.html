@@ -1,22 +1,22 @@
 <div class="panel panel-default">
 	<div class="panel-body">
-		<button data-ng-click="cheat()" type="button" class="btn btn-success">Quick test sign in</button>
-		<div>{{facebookTest}}</div>
+
 		<div class="row">
 			<div class="col-xs-12 col-md-6">
-				<form name="signInForm" data-ng-submit="validate(signInForm)">
+				<!-- User login form -->
+				<form name="signInForm" data-ng-submit="verify(signInForm)">
 					<fieldset data-ng-disabled="isSaving">
 						<div class="form-group">
-							<label for="name" class="control-label">Username</label>
-							<input data-ng-model="user.name" id="name" name="name" type="text" class="form-control"
-								   required>
+							<label for="email" class="control-label">Username</label>
+							<input data-ng-model="user.email" id="email" name="email" type="text" class="form-control" required>
 						</div>
 
 						<div class="form-group">
 							<label for="password" class="control-label">Password</label>
-							<input data-ng-model="user.password" id="password" name="password" type="password"
-								   class="form-control" required>
+							<input data-ng-model="user.password" id="password" name="password" type="password" class="form-control" required>
 						</div>
+
+						<button type="submit" class="btn btn-default btn-block">Log in</button>
 					</fieldset>
 				</form>
 			</div>

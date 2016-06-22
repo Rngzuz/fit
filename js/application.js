@@ -47,15 +47,20 @@ fit.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 	})
 	.state('plan.list', {
 		url: '',
-		templateUrl: 'partial/plan/plan.list.html'
+		templateUrl: 'partial/plan/plan.list.html',
+		controller: 'PlanListController',
+		title: 'Plan - List'
 	})
 	.state('plan.create', {
 		url: '/create',
-		templateUrl: 'partial/plan/plan.create.html'
+		templateUrl: 'partial/plan/plan.create.html',
+		controller: 'PlanCreateController',
+		title: 'Plan - Create'
 	})
 	.state('plan.edit', {
 		url: '/:id',
-		templateUrl: 'partial/plan/plan.edit.html'
+		templateUrl: 'partial/plan/plan.edit.html',
+		title: 'Plan - Edit'
 	});
 }])
 //Run blocks will be executed once after config blocks and is the closest thing to a main method.
@@ -78,9 +83,10 @@ fit.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 
 	//Updates the page title and name of the current state
 	//Params: event, toState, toParams, fromState, fromParams
-	$rootScope.$on('$stateChangeStart', function (event, toState) {
+	$rootScope.$on('$stateChangeStart', function (event, toState, toStateParams, fromState, fromStateParams) {
 		var isValid = UserDataService.isAuthenticated();
 
+		//Prevents user from accessing any other states than auth if not logged in
 		if (!isValid) {
 			if (toState.name.indexOf('auth') == -1) {
 				event.preventDefault();
@@ -88,11 +94,15 @@ fit.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 			}
 			$rootScope.currentStateTitle = 'Authentication';
 			$rootScope.currentState = 'auth';
-		} else if (isValid) {
+		}
+		//Prevents user from accessing the auth state when logged in
+		else if (isValid && toState.name === 'auth') {
+			$state.go(fromState.name, fromStateParams);
+		}
+		//Goes to the requested state if user is logged in
+		else if (isValid) {
 			$rootScope.currentStateTitle = toState.title;
 			$rootScope.currentState = toState.name;
 		}
-
-
 	});
 }]);

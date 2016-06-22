@@ -1,1 +1,25 @@
-<h1>Plan create</h1>
+<form name="createPlanForm" data-ng-submit="submit(createExerciseForm)" class="form-horizontal" novalidate>
+	<fieldset data-ng-disabled="isSaving">
+		<div class="form-group">
+			<label for="name" class="col-sm-2 control-label">Plan name</label>
+			<div class="col-sm-10">
+				<input data-ng-model="plan.name" id="name" name="name" type="text" class="form-control" required>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-xs-12">
+				<button type="submit" class="btn btn-success btn-block">Save</button>
+			</div>
+		</div>
+
+		<ul class="list-group">
+			<li data-ng-repeat="item in data" class="list-group-item">
+				<label>
+					<input data-ng-click="toggleExercise($event)" type="checkbox" value="{{item._id}}">
+				</label>
+				{{item.name}}
+			</li>
+		</ul>
+	</fieldset>
+</form>

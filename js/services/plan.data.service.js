@@ -1,35 +1,11 @@
-fit.service('PlanDataService', ['DataService', '$cacheFactory', '$q', function (DataService, $cacheFactory, $q) {
-	var endpoint = '';
+fit.service('PlanDataService', ['DataService', 'UserDataService', 'ExerciseDataService', '$cacheFactory', '$q', function (DataService, UserDataService, ExerciseDataService, $cacheFactory, $q) {
+	var endpoint = 'https://sleepy-sea-10905.herokuapp.com/api/users/';
 	var cacheName = 'PlanData';
 	var cache = $cacheFactory(cacheName);
+	var userCacheData = UserDataService.getCache();
 	var self = this;
 
-	this.flag = true;
-
-	var dummy = [
-		{
-			_id: 0,
-			name: 'Plan 1',
-			exercises: []
-		},
-		{
-			_id: 1,
-			name: 'Plan 2',
-			exercises: []
-		},
-		{
-			_id: 2,
-			name: 'Plan 3',
-			exercises: []
-		},
-		{
-			_id: 3,
-			name: 'Plan 4',
-			exercises: []
-		}
-	];
-
-	cache.put('Plan', dummy);
+	this.flag = false;
 
 	this.get = function (id) {
 		var defer = $q.defer();
@@ -48,8 +24,21 @@ fit.service('PlanDataService', ['DataService', '$cacheFactory', '$q', function (
 			return defer.promise;
 		}
 
+		self.getAll()
+		.then(function (response) {
+			for (var i = 0; i < cacheData.length; i++) {
+				if (cacheData[i]['_id'] === id) {
+					defer.resolve({
+						data: cacheData[i]
+					});
+					break;
+				}
+			}
+		});
+
 		return defer.promise;
 	};
+
 
 	this.getAll = function () {
 		var defer = $q.defer();
@@ -59,9 +48,20 @@ fit.service('PlanDataService', ['DataService', '$cacheFactory', '$q', function (
 			defer.resolve({
 				data: cacheData
 			});
-
 			return defer.promise;
 		}
+
+		DataService.get(endpoint + userCacheData.email + '/plans')
+		.then(
+			function (response) {
+				self.flag = true;
+				cache.put(cacheName, response.data);
+				defer.resolve(response);
+			},
+			function (error) {
+				defer.reject(error);
+			}
+		);
 
 		return defer.promise;
 	};
@@ -86,13 +86,19 @@ fit.service('PlanDataService', ['DataService', '$cacheFactory', '$q', function (
 	};
 
 	this.create = function (object) {
-		var cacheData = cache.get(cacheName);
+		var defer = $q.defer();
 
-		if (cacheData) {
-			cacheData.push(object);
-			cache.put(cacheName, cacheData);
-			self.flag = false;
-		}
+		DataService.post(endpoint + userCacheData.email + '/plans', object)
+		.then(
+			function (response) {
+				defer.resolve(response);
+			},
+			function (error) {
+				defer.reject(error);
+			}
+		);
+
+		return defer.promise;
 	};
 
 	this.delete = function (id) {

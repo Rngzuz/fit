@@ -1,3 +1,11 @@
-<h2>Plan list</h2>
-<a data-ui-sref="^.create" class="btn btn-default">Create</a>
-<a data-ui-sref="^.edit({id: 0})" class="btn btn-default">Edit</a>
+<div class="row">
+	<div class="col-xs-12 margin-bottom-10">
+		<a data-ui-sref="^.create" class="btn btn-default">Create</a>
+	</div>
+</div>
+
+<div class="list-group">
+	<a data-ng-repeat="item in data" class="list-group-item">
+		{{item.email}}
+	</a>
+</div>

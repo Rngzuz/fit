@@ -1,6 +1,9 @@
-fit.controller('AuthController', ['$scope', '$rootScope', '$state', 'UserDataService', 'FacebookService', function ($scope, $rootScope, $state, UserDataService, FacebookService) {
+fit.controller('AuthController', ['$scope', '$rootScope', '$state', 'UserDataService', function ($scope, $rootScope, $state, UserDataService) {
 	$scope.isSaving = false;
-	$scope.user = {};
+	$scope.user = {
+		email: 'email@example.com',
+		password: 'abc#123'
+	};
 	$scope.register = {
 		email: 'email@example.com',
 		password: {
@@ -9,36 +12,26 @@ fit.controller('AuthController', ['$scope', '$rootScope', '$state', 'UserDataSer
 		},
 		name: 'Tobias',
 		lastname: 'Wiedemann',
+		level: 0,
 		metric: 'Kilograms',
 		weight: 73,
 		height: 181
 	};
 
-	$scope.facebookTest = "You are not logged in.";
-
-	$scope.cheat = function () {
-		FacebookService.login().then(
-			function (response) {
-				FB.api('/me', {fields: 'name'}, function(response) {
-					$scope.facebookTest = 'You are now logged in as ' + response.name;
-					console.log(response);
-				});
+	$scope.verify = function () {
+		UserDataService.verify($scope.user)
+		.then(
+			function () {
+				console.log(UserDataService.getCache());
+				$state.go('exercise.list');
 			},
 			function (error) {
-				$scope.facebookTest = 'An error occurred.'
+				console.log(error);
 			}
 		);
 	};
 
-	$scope.validate = function (name, lie) {
-		UserDataService.validate(name, lie)
-		.then(function (response) {
-			$state.go('exercise.list');
-			console.log(response);
-		});
-	};
-
-	$scope.registerUser = function (form) {
+	$scope.registerUser = function () {
 		var first = $scope.register.password.first;
 		var second = $scope.register.password.second;
 
@@ -49,8 +42,6 @@ fit.controller('AuthController', ['$scope', '$rootScope', '$state', 'UserDataSer
 
 			UserDataService.create($scope.register)
 			.then(function (response) {
-				console.log(response);
-
 				$rootScope.alertSuccess = {
 					visible: true,
 					status: response.status,
