@@ -1,4 +1,4 @@
-fit.controller('AuthController', ['$scope', '$rootScope', '$state', 'UserDataService', function ($scope, $rootScope, $state, UserDataService) {
+fit.controller('AuthController', ['$scope', '$rootScope', '$state', 'UserDataService', 'FacebookService', function ($scope, $rootScope, $state, UserDataService, FacebookService) {
 	$scope.isSaving = false;
 	$scope.user = {};
 	$scope.register = {
@@ -14,9 +14,20 @@ fit.controller('AuthController', ['$scope', '$rootScope', '$state', 'UserDataSer
 		height: 181
 	};
 
+	$scope.facebookTest = "You are not logged in.";
+
 	$scope.cheat = function () {
-		UserDataService.hack();
-		$state.go('exercise.list');
+		FacebookService.login().then(
+			function (response) {
+				FB.api('/me', {fields: 'name'}, function(response) {
+					$scope.facebookTest = 'You are now logged in as ' + response.name;
+					console.log(response);
+				});
+			},
+			function (error) {
+				$scope.facebookTest = 'An error occurred.'
+			}
+		);
 	};
 
 	$scope.validate = function (name, lie) {

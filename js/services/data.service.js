@@ -2,6 +2,10 @@
  When a service is injected an instance will be created by angular, which can be in all controllers, services and so on.
  The difference between services and factories is that a service gets instantiated, where a factory is just a function that
  gets executed.
+
+ The dependencies and the function that is executed is typed out in an array, so it can be minified. The reason for this is that
+ minification will refactor function parameters to single letters or short combinations and angular will therefore not know which
+ dependencies we are trying to inject.
  */
 
 fit.service('DataService', ['$q', '$http', function ($q, $http) {
