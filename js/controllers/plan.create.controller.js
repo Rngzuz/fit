@@ -22,35 +22,37 @@ fit.controller('PlanCreateController', ['$scope', 'PlanDataService', 'ExerciseDa
 	);
 
 	$scope.submit = function (form) {
-		$scope.isSaving = true;
-		$scope.plan.schedule = schedule;
+		if (form.$valid) {
+			$scope.isSaving = true;
+			$scope.plan.schedule = schedule;
 
-		PlanDataService.create($scope.plan)
-		.then(
-			function (response) {
-				$scope.isSaving = false;
-				form.$setPristine();
+			PlanDataService.create($scope.plan)
+			.then(
+				function (response) {
+					$scope.isSaving = false;
+					form.$setPristine();
 
-				$rootScope.alertSuccess = {
-					visible: true,
-					status: response.status,
-					message: $scope.plan.name + ' has been created!'
-				};
+					$rootScope.alertSuccess = {
+						visible: true,
+						status: response.status,
+						message: $scope.plan.name + ' has been created!'
+					};
 
-				$scope.data = {};
-				$state.go('^.list')
-			},
-			function (error) {
-				$scope.isSaving = false;
-				$rootScope.alertError = {
-					visible: true,
-					status: error.status,
-					message: error.data.error
-				};
+					$scope.data = {};
+					$state.go('^.list')
+				},
+				function (error) {
+					$scope.isSaving = false;
+					$rootScope.alertError = {
+						visible: true,
+						status: error.status,
+						message: error.data.error
+					};
 
-				$state.go('^.list');
-			}
-		)
+					$state.go('^.list');
+				}
+			);
+		}
 
 	};
 
