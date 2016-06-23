@@ -11,7 +11,6 @@ fit.service('UserDataService', ['DataService', '$cacheFactory', '$q', function (
 
 	this.signOut = function () {
 		isValid = false;
-		cache.destroy();
 	};
 
 	this.getCache = function () {
@@ -63,13 +62,6 @@ fit.service('UserDataService', ['DataService', '$cacheFactory', '$q', function (
 
 	this.create = function (object) {
 		return DataService.post(endpoint, object);
-	};
-
-	this.update = function (email) {
-		if (!isValid)
-			return false;
-
-		return DataService.update(endpoint, email);
 	};
 
 	this.delete = function (email) {

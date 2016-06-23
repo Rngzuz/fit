@@ -1,35 +1,54 @@
-fit.controller('PlanCreateController', ['$scope', 'PlanDataService', 'ExerciseDataService', function ($scope, PlanDataService, ExerciseDataService) {
-	$scope.plan = {
-		name: '',
-		schedule: {}
-	};
+fit.controller('PlanCreateController', ['$scope', 'PlanDataService', 'ExerciseDataService', '$rootScope', '$state', function ($scope, PlanDataService, ExerciseDataService, $rootScope, $state) {
+	$scope.isSaving = false;
+	$scope.plan = {};
 
 	var schedule = [];
 
 	$scope.data = {};
 
+	//Get all exercises
 	ExerciseDataService.getAll()
 	.then(
 		function (response) {
 			$scope.data = response.data;
-			console.log(response.data);
 		},
 		function (error) {
-			console.log(error);
+			$rootScope.alertError = {
+				visible: true,
+				status: error.status,
+				message: error.data.error
+			};
 		}
 	);
 
-	$scope.submit = function () {
+	$scope.submit = function (form) {
+		$scope.isSaving = true;
 		$scope.plan.schedule = schedule;
-		console.log($scope.plan);
 
 		PlanDataService.create($scope.plan)
 		.then(
 			function (response) {
-				console.log(response)
+				$scope.isSaving = false;
+				form.$setPristine();
+
+				$rootScope.alertSuccess = {
+					visible: true,
+					status: response.status,
+					message: $scope.plan.name + ' has been created!'
+				};
+
+				$scope.data = {};
+				$state.go('^.list')
 			},
 			function (error) {
-				console.log(error)
+				$scope.isSaving = false;
+				$rootScope.alertError = {
+					visible: true,
+					status: error.status,
+					message: error.data.error
+				};
+
+				$state.go('^.list');
 			}
 		)
 

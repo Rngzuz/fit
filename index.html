@@ -6,7 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Assets -->
-	<!-- <script src="js/assets/facebook.js"></script> -->
 	<script src="js/assets/jquery.min.js"></script>
 	<script src="js/assets/angular.min.js"></script>
 	<script src="js/assets/angular-ui-router.min.js"></script>
@@ -16,7 +15,6 @@
 	<script src="js/application.js"></script>
 
 	<!-- Services -->
-	<script src="js/services/facebook.service.js"></script>
 	<script src="js/services/data.service.js"></script>
 	<script src="js/services/user.data.service.js"></script>
 	<script src="js/services/exercise.data.service.js"></script>
@@ -30,6 +28,7 @@
 	<script src="js/controllers/exercise.edit.controller.js"></script>
 	<script src="js/controllers/plan.create.controller.js"></script>
 	<script src="js/controllers/plan.list.controller.js"></script>
+	<script src="js/controllers/plan.view.controller.js"></script>
 
 	<!-- Stylesheets -->
 	<link rel="stylesheet" href="css/bootstrap.min.css">
@@ -40,22 +39,47 @@
 <body>
 
 <div class="container">
-	<div class="row">
-		<div data-ng-controller="NavController" class="col-xs-12">
-			<div class="panel panel-default">
-				<div class="panel-body nav-container">
-					<span data-ng-show="isValid()">
-						<a data-ng-class="{'active': currentState.indexOf('exercise') > -1}" data-ui-sref="exercise.list" class="btn btn-default">Exercises</a>
-						<a data-ng-class="{'active': currentState == 'plan.list'}" data-ui-sref="plan.list" class="btn btn-default">Plans</a>
-					</span>
-					<span class="pull-right">
-					<a data-ng-hide="isValid()" data-ui-sref="auth" class="btn btn-default active">Sign In</a>
-					<a data-ng-show="isValid()" data-ng-click="signOut()" class="btn btn-default pull-right">Sign Out</a>
-					</span>
+	<!-- Page navigation -->
+	<nav data-ng-controller="NavController" class="navbar navbar-default">
+		<div class="container-fluid">
+
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<span class="navbar-brand" href="#">FitApp</span>
+			</div>
+
+			<div class="collapse navbar-collapse" id="navbar">
+				<ul data-ng-show="isValid()" class="nav navbar-nav">
+					<li data-ng-class="{'active': currentState.indexOf('exercise') > -1}">
+						<a data-ui-sref="exercise.list">Exercises</a>
+					</li>
+					<li data-ng-class="{'active': currentState == 'plan.list'}">
+						<a data-ui-sref="plan.list">Plans</a>
+					</li>
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active">
+						<a data-ng-hide="isValid()" data-ui-sref="auth">Sign In</a>
+					</li>
+					<li>
+						<a data-ng-show="isValid()" data-ng-click="signOut()">Sign Out</a>
+					</li>
+				</ul>
+
+				<div data-ng-show="isValid()" class="nav navbar-right hidden-xs">
+					<p class="navbar-text">Signed in as {{getUser().email}}</p>
 				</div>
 			</div>
 		</div>
+	</nav>
 
+	<!-- Global success/error alerts -->
+	<div class="row">
 		<div class="col-xs-12">
 			<div data-ng-show="alertSuccess.visible" id="alert_success" class="alert alert-success alert-dismissible">
 				<button data-ng-click="alertSuccess.visible = false" type="button" class="close">
@@ -72,6 +96,7 @@
 			</div>
 		</div>
 
+		<!-- Partial view container -->
 		<div class="col-xs-12" data-ui-view=""></div>
 	</div>
 </div>

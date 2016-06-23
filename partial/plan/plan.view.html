@@ -1,0 +1,15 @@
+<h4>{{data.name}}</h4>
+<hr />
+<ul class="list-group">
+	<li data-ng-repeat="item in data.schedule" class="list-group-item">
+		{{item.name}}
+	</li>
+</ul>
+<div class="row" data-ng-disabled="isSaving">
+	<div class="col-xs-6">
+		<a data-ui-sref="^.list" class="btn btn-warning btn-block">Cancel</a>
+	</div>
+	<div class="col-xs-6">
+		<button data-ng-click="delete()" type="button" class="btn btn-danger btn-block">Delete</button>
+	</div>
+</div>

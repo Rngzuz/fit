@@ -26,10 +26,12 @@ fit.service('PlanDataService', ['DataService', 'UserDataService', 'ExerciseDataS
 
 		self.getAll()
 		.then(function (response) {
-			for (var i = 0; i < cacheData.length; i++) {
-				if (cacheData[i]['_id'] === id) {
+			var data = response.data;
+
+			for (var i = 0; i < data.length; i++) {
+				if (data[i]['_id'] === id) {
 					defer.resolve({
-						data: cacheData[i]
+						data: data[i]
 					});
 					break;
 				}
@@ -38,7 +40,6 @@ fit.service('PlanDataService', ['DataService', 'UserDataService', 'ExerciseDataS
 
 		return defer.promise;
 	};
-
 
 	this.getAll = function () {
 		var defer = $q.defer();
@@ -70,27 +71,13 @@ fit.service('PlanDataService', ['DataService', 'UserDataService', 'ExerciseDataS
 		return cache.get(cacheName);
 	};
 
-	this.update = function (id, object) {
-		var cacheData = cache.get(cacheName);
-
-		if (cacheData) {
-			for (var i = 0; i < cacheData.length; i++) {
-				if (cacheData[i]['_id'] === id) {
-					cacheData.splice(i, 1, object);
-					break;
-				}
-			}
-
-			cache.put(cacheName, cacheData);
-		}
-	};
-
 	this.create = function (object) {
 		var defer = $q.defer();
 
 		DataService.post(endpoint + userCacheData.email + '/plans', object)
 		.then(
 			function (response) {
+				self.flag = false;
 				defer.resolve(response);
 			},
 			function (error) {
@@ -114,5 +101,7 @@ fit.service('PlanDataService', ['DataService', 'UserDataService', 'ExerciseDataS
 
 			cache.put(cacheName, cacheData);
 		}
+
+		return DataService.delete(endpoint + userCacheData.email + '/plans/', id);
 	};
 }]);

@@ -20,6 +20,19 @@ body {
 	}
 }
 
+a {
+	cursor: pointer;
+}
+
+.navbar-default .navbar-text {
+	color: #a4a4a4;
+}
+
+.navbar {
+	border-radius: 4px;
+}
+
+.navbar,
 .panel,
 .list-group,
 .alert {

@@ -19,14 +19,20 @@ fit.controller('AuthController', ['$scope', '$rootScope', '$state', 'UserDataSer
 	};
 
 	$scope.verify = function () {
+		$scope.isSaving = true;
 		UserDataService.verify($scope.user)
 		.then(
 			function () {
-				console.log(UserDataService.getCache());
 				$state.go('exercise.list');
+				$scope.isSaving = false;
 			},
 			function (error) {
-				console.log(error);
+				$rootScope.alertError = {
+					visible: true,
+					status: error.status,
+					message: error.data.error
+				};
+				$scope.isSaving = false;
 			}
 		);
 	};

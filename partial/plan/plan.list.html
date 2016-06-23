@@ -5,7 +5,7 @@
 </div>
 
 <div class="list-group">
-	<a data-ng-repeat="item in data" class="list-group-item">
-		{{item.email}}
+	<a data-ng-repeat="item in data" data-ui-sref="^.view({id: item._id})" class="list-group-item">
+		{{item.name}}
 	</a>
 </div>

@@ -1,5 +1,4 @@
 fit.controller('PlanListController', ['$scope', 'PlanDataService', function ($scope, PlanDataService) {
-
 	$scope.data = {};
 
 	PlanDataService.getAll()
@@ -11,6 +10,5 @@ fit.controller('PlanListController', ['$scope', 'PlanDataService', function ($sc
 			console.log(error)
 		}
 	);
-
 
 }]);

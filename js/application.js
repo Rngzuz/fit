@@ -22,7 +22,7 @@ fit.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 	})
 	.state('exercise.list', {
 		url: '',
-		templateUrl: 'partial/exercise/exercise.list.html',
+		templateUrl: 'partial/exercise/exercise.listing.html',
 		controller: 'ExerciseListController',
 		title: 'Exercises - List'
 	})
@@ -57,10 +57,11 @@ fit.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 		controller: 'PlanCreateController',
 		title: 'Plan - Create'
 	})
-	.state('plan.edit', {
+	.state('plan.view', {
 		url: '/:id',
-		templateUrl: 'partial/plan/plan.edit.html',
-		title: 'Plan - Edit'
+		templateUrl: 'partial/plan/plan.view.html',
+		controller: 'PlanViewController',
+		title: 'Plan - View'
 	});
 }])
 //Run blocks will be executed once after config blocks and is the closest thing to a main method.

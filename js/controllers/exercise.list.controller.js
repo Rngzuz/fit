@@ -1,5 +1,4 @@
-fit
-.controller('ExerciseListController', ['$scope', 'ExerciseDataService', function ($scope, ExerciseDataService) {
+fit.controller('ExerciseListController', ['$scope', 'ExerciseDataService', function ($scope, ExerciseDataService) {
 	$scope.data = [];
 
 	ExerciseDataService.getAll()
